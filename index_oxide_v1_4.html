@@ -2696,6 +2696,7 @@ const Rail = (() => {
   const max = () => Math.max(0, document.documentElement.scrollHeight - innerHeight);
   let maxScroll = max();
   let scaleHeight = scale.clientHeight || 1;
+  
   function update() {
     const m = maxScroll;
     const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -2771,7 +2772,7 @@ const Rail = (() => {
       return;
     }
     /* Экспоненциальное затухание не зависит от 60/120/144 Гц. */
-    const amount = 1 - Math.exp(-dt / 0);
+    const amount = 1 - Math.exp(-dt / 170);
     window.scrollTo(0, current + diff * amount);
     update();
     wheelRaf = requestAnimationFrame(wheelFrame);
@@ -2806,10 +2807,10 @@ const Rail = (() => {
     if (!wheelRaf) wheelTargetY = current;
     /* Шаг масштабируется по длине прокрутки: одно движение не должно давать десятки процентов шкалы. */
     const range = Math.max(1, maxScroll);
-    const stepLimit = Math.min(40, Math.max(1, range * 0.05));
-    const step = Math.sign(delta) * Math.min(stepLimit, Math.abs(delta) * 0.34);
+    const stepLimit = Math.min(40, Math.max(1, range * 1.55));
+    const step = Math.sign(delta) * Math.min(stepLimit, Math.abs(delta) * 2.34);
     /* Очередь импульсов ограничена 10% всей прокручиваемой длины, а не фиксированными пикселями. */
-    const maxLead = Math.max(2, Math.min(96, range * 0.10));
+    const maxLead = Math.max(2, Math.min(896, range * 2.10));
     wheelTargetY = clampScroll(Math.max(current - maxLead * 0.7, Math.min(current + maxLead, wheelTargetY + step)));
     if (!wheelRaf) wheelRaf = requestAnimationFrame(wheelFrame);
   }
