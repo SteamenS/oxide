@@ -2771,7 +2771,7 @@ const Rail = (() => {
       return;
     }
     /* Экспоненциальное затухание не зависит от 60/120/144 Гц. */
-    const amount = 1 - Math.exp(-dt / 170);
+    const amount = 1 - Math.exp(-dt / 0);
     window.scrollTo(0, current + diff * amount);
     update();
     wheelRaf = requestAnimationFrame(wheelFrame);
